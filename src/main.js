@@ -30,7 +30,6 @@ form.addEventListener("submit", (event) => {
         return;
     }
 
-    gallery.innerHTML = '';
     loader.style.display = 'block';
 
     fetchImages(inputValue)
@@ -63,5 +62,6 @@ form.addEventListener("submit", (event) => {
             loader.style.display = 'none';
         });
     
+    gallery.innerHTML = '';
     form.reset();
 });
