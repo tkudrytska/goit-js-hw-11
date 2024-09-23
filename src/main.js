@@ -11,7 +11,10 @@ const form = document.querySelector('.search-form');
 export const gallery = document.querySelector('.image-gallery');
 const loader = document.querySelector('.loader');
 
-let lightbox = null;
+let lightbox = new SimpleLightbox('.image-gallery a', {
+    captionsData: 'alt',
+    captionDelay: 250,
+});
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -27,6 +30,7 @@ form.addEventListener("submit", (event) => {
         return;
     }
 
+    gallery.innerHTML = '';
     loader.style.display = 'block';
 
     fetchImages(inputValue)
@@ -37,20 +41,14 @@ form.addEventListener("submit", (event) => {
                     color: 'red',
                     position: 'topRight',
                 });
+                gallery.innerHTML = '';
                 return;
             }
-            gallery.innerHTML = '';
+            
             renderImages(images.hits);
+
             if (lightbox) {
                 lightbox.refresh();
-            } else {
-                lightbox = new SimpleLightbox('.gallery a', {
-                    captions: true,
-                    captionSelector: 'img',
-                    captionsData: 'alt',
-                    captionPosition: 'bottom',
-                    captionDelay: 250,
-                });
             };
         })
         .catch(() => {
@@ -59,6 +57,7 @@ form.addEventListener("submit", (event) => {
                 color: 'red',
                 position: 'topRight',
             });
+            gallery.innerHTML = '';
         })
         .finally(() => {
             loader.style.display = 'none';
